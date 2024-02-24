@@ -1,0 +1,32 @@
+version: "3.9"
+services:
+  t3-app:
+    platform: "linux/amd64"
+    entrypoint:
+    - npx
+    - prisma
+    - generate
+    container_name: t3-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_CLIENTVAR: "clientvar"
+    working_dir: /app
+    ports:
+      - "3100:3000"
+    image: t3-app
+    env_file:
+    - .env
+    # environment:
+    #   - DATABASE_URL=database_url_goes_here
+    volumes:
+    - ./prisma:/app/prisma
+    - ./src:/app/src
+    networks:
+      wave-net:
+        aliases:
+          - t3-app
+networks:
+  wave-net:
+    external: true

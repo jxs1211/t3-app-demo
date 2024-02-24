@@ -1,0 +1,20 @@
+name: t3-app-mysql
+services:
+  mysql:
+    container_name: t3-app-demo-mysql #$DB_CONTAINER_NAME
+    environment:
+        # - MYSQL_ROOT_PASSWORD=$DB_PASSWORD
+        - MYSQL_ROOT_PASSWORD=123
+        - MYSQL_DATABASE=t3-app-demo
+    ports:
+        - 3316:3306
+    image: docker.io/mysql
+    volumes:
+    - /home/going/work/docker-env/data/mysql:/var/lib/mysql
+    networks:
+      wave-net:
+        aliases:
+          - t3-app-mysql
+networks:
+  wave-net:
+    external: true
